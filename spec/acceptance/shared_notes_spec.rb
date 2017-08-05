@@ -8,7 +8,7 @@ feature 'Create note', %q{
 
   given(:user) { create(:user) }
   given(:user2) { create(:user) }
-  given(:user3) { create(:user) }
+  given(:another_user) { create(:user) }
   given(:note) { create(:note, user: user) }
 
   before do
@@ -48,12 +48,12 @@ feature 'Create note', %q{
   context 'Share note: another user sight' do
 
     scenario "Another authenticateduser can only see a shared note", js: true do
-      fill_in 'sharing_email', with: user3.email
+      fill_in 'sharing_email', with: another_user.email
       find('.js__share_note').click
       expect(page).to have_content 'Событие успешно расшарено.'
       click_on 'Выйти'
 
-      sign_in(user3)
+      sign_in(another_user)
       expect(page).to have_content 'У вас есть новые события(1)'
       click_on 'У вас есть новые события(1)'
       within '.panel-success' do
@@ -69,6 +69,12 @@ feature 'Create note', %q{
       visit root_path
       expect(page).to_not have_content 'У вас есть новые события(1)'
       expect(page).to have_content 'У вас есть новые события(0)'
+
+      within '.shared_notes' do
+        expect(page).to have_content note.title
+        expect(page).to have_content note.description.first(80) + '...'
+        expect(page).to have_content user.email
+      end
     end
   end
 end

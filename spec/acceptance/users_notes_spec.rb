@@ -92,6 +92,25 @@ feature 'Create/Edit/Delete note', %q{
       expect(current_path).to eq notes_path
       expect(page).to_not have_selector '.panel-success'
     end
+  end
 
+  context 'change date' do
+    given!(:note) { create(:note, user: user) }
+    given!(:date_note) { create(:date_note, user: user) }
+    
+    before { sign_in(user) }
+
+    scenario 'Authenticated user change date', js: true do
+      visit root_path
+      expect(page).to have_content note.title
+      expect(page).to have_content note.description
+      
+      visit root_path(params: { date: '08.08.2017'} )
+      expect(page).to have_content date_note.title
+      expect(page).to have_content date_note.description
+
+      visit root_path(params: { date: '11.08.2017'} )
+      expect(page).to_not have_selector '.panel-success'
+    end
   end
 end
