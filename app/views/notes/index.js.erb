@@ -1,0 +1,13 @@
+<% if @notes.any? %>
+  $('.my_notes').html("<%= j render @notes %>")
+<% else %>
+  $('.my_notes').html('<p> Событий на этот день нет </p>')
+<% end %>
+
+<% if @others_notes.any? %>
+  <% @others_notes.each do |note| %>
+    $('.shared_notes').html("<%= j render 'note', note: note %>")
+  <% end %>
+<% else %>
+  $('.shared_notes').html('<p> Событий на этот день нет </p>')
+<% end %>

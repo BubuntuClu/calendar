@@ -1,0 +1,24 @@
+= form_for note do |f|
+  = f.label :title
+  = f.text_field :title
+  %p.error_msg.title
+    = note.errors.messages.dig(:title, 0)
+  %br
+  = f.label :description
+  = f.text_area :description
+  %p.error_msg.description
+    = note.errors.messages.dig(:description, 0)
+  %br
+  = f.label :calendar_date
+  = f.text_field :calendar_date, class: 'datepicker'
+  %p.error_msg.calendar_date
+    = note.errors.messages.dig(:calendar_date, 0)
+  %br
+  = f.submit "#{note.new_record? ? 'Создать событие' : 'Обновить событие' }", class: 'btn btn-default'
+
+:javascript
+  $('.datepicker').datetimepicker({
+    format: 'd.m.Y',
+    lang: 'ru',
+    timepicker: false
+  });

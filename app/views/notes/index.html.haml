@@ -1,0 +1,36 @@
+
+- if current_user
+  %input#calendar.datetimepicker_event{ placeholder: 'Выбрать дату', type: 'text'}
+  %br
+  .col-md-8
+    %p Твои события на этот день:
+    .my_notes
+      = render @notes
+  .col-md-4
+    %p События, которыми с тобой поделились:
+    .shared_notes
+      - @others_notes.each do |note|
+        = render 'note', note: note
+-else
+  %p Для работы с приложением необходимо авторизоваться
+
+
+:javascript
+  $('.datetimepicker_event').datetimepicker({
+    format: 'd.m.Y',
+    lang: 'ru',
+    timepicker: false,
+    onSelectDate: function(ct, $i){
+      $.ajax({
+        url: "#{root_path}",
+        type: "GET",
+        data: { date: ct },
+        dataType: "script",
+        success: function(data){
+        },
+        error: function(data){
+          console.log('Error:' + data)
+        }
+      });
+    }
+  });

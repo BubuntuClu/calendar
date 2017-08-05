@@ -1,0 +1,21 @@
+%h2
+  = @note.title
+.content
+  %p Описание события:
+  = @note.description
+%br
+.date
+  %p Дата события:
+  = @note.calendar_date.strftime('%d.%m.%Y')
+
+- if @note.user == current_user
+  = link_to 'Редактировать', edit_note_path(@note), class: 'btn btn-warning'
+  = link_to 'Удалить', note_path(@note), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'btn btn-danger'
+
+  %br
+  %br
+  .sharing_content
+    = text_field_tag :user_email, nil, id: 'sharing_email', placeholder: 'Впишите email пользователя'
+    .btn.btn-success.js__share_note Поделиться
+    %br
+    %p.sharing_msg

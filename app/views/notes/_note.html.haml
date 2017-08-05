@@ -1,0 +1,13 @@
+.note.panel.panel-success
+  .panel-heading
+    %h3.panel-title
+      = link_to "#{note.title}", note_path(note)
+  .panel-body  
+    = note.description.first(80) + '...'
+    %br
+    %span.label.label-success
+      Автор
+    - if note.user == current_user
+      Вы
+    - else
+      = note.user.email
