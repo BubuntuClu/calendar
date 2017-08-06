@@ -24,6 +24,7 @@ class NotesController < ApplicationController
   def show
     shared = SharedNote.where(user_id: current_user, note_id: @note.id, seen: false).first
     shared.update_attribute(:seen, true) if shared
+    redirect_to root_path if !current_user.others_notes.include?(@note) && @note.user != current_user
   end
 
   def edit
