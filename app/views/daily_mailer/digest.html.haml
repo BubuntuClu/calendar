@@ -1,0 +1,10 @@
+%h1 Ваши события на сегодня
+- @notes.each do |note|
+  = link_to note.title, note
+  %br
+
+%h1 События, которыми с вами поделились
+- @others_notes.each do |note|
+  = link_to note.title, note
+  %br
+  
