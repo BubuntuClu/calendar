@@ -38,6 +38,9 @@ gem 'devise'
 gem 'kaminari'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
+gem 'whenever'
+gem 'sidekiq'
+gem 'sinatra', require: nil
 
 source 'http://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
